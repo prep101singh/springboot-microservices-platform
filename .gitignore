@@ -1,0 +1,51 @@
+# Maven
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Logs
+*.log
+logs/
+
+# IntelliJ
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Mac
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Spring Boot
+*.pid
+*.seed
+*.pid.lock
+
+# Environment
+.env
+.env.*
+
+# Docker (optional)
+docker-data/
+
+# Kubernetes local overrides
+*.local.yml
+
+# Node (if added later)
+node_modules/
+
+# Build
+build/
+
+# temp
+tmp/
+temp/
