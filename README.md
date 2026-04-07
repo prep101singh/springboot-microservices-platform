@@ -1,23 +1,26 @@
 # springboot-microservices-platform
 
-Cloud-native microservices platform built using **Spring Boot, API Gateway, Docker, Kubernetes, and AWS**.
-This project is created for **hands-on learning** covering end-to-end microservices architecture.
+Cloud-native microservices platform built using **Spring Boot,Spring Cloud,Eureka, API Gateway, Feign Client, H2, Docker, Kubernetes, and AWS**.
+This project is created for **hands-on learning** covering end-to-end microservices communication with service discovery and containerization.
 
 ---
 
 # 🏗️ Architecture
 
-Client → API Gateway → Microservices
-
-Services:
-
-* user-service
-* product-service
-* order-service
-* payment-service
-* notification-service
-
----
+                ┌─────────────┐
+                │  API Gateway│
+                └──────┬──────┘
+                       │
+                ┌──────▼──────┐
+                │   Eureka    │
+                │ Discovery   │
+                └──────┬──────┘
+                       │
+        ┌──────────────┴──────────────┐
+        │                             │
+┌───────▼────────┐           ┌────────▼────────┐
+│ product-service │           │  order-service  │
+└────────────────┘           └─────────────────┘
 
 # 📁 Project Structure
 
@@ -34,6 +37,69 @@ springboot-microservices-platform
 
 ---
 
+# Tech Stack
+   Java 17
+   Spring Boot
+   Spring Cloud Gateway
+   Eureka Service Discovery
+   OpenFeign
+   Spring Data JPA
+   H2 Database
+   Docker
+   Maven
+
+# Services:
+
+1. discovery-server
+   Eureka server
+   Port: 8761
+   Service registry
+2. api-gateway
+   Routes requests to services
+   Port: 8080
+3. product-service
+   Product catalog management
+   Port: 8082
+4. order-service
+   Order creation
+   Calls product-service via Feign
+   Port: 8083
+5. user-service
+6. payment-service
+7. notification-service
+
+---
+
+# API Endpoints
+
+Create Product
+
+POST /products
+
+{
+  "name": "iPhone",
+  "description": "Apple phone",
+  "price": 80000,
+  "stock": 10
+}
+Get Products
+
+GET /products
+
+Create Order
+
+POST /orders
+{
+  "userId": 1,
+  "items": [
+    {
+      "productId": 1,
+      "quantity": 2
+    }
+  ]
+}
+
+
 # 🚀 Services & Ports
 
 API Gateway → 8080
@@ -45,24 +111,36 @@ Notification Service → 8085
 
 ---
 
-# ⚙️ Tech Stack
+# Run Using Docker
 
-* Spring Boot
-* Spring Cloud Gateway
-* Maven
-* Java 21
-* H2 Database
-* Docker (next)
-* Kubernetes (next)
-* AWS (next)
+Build jars: mvn clean package
 
----
+Run containers: docker-compose up
+
+Services:
+
+Service	            Port
+API Gateway	         8080
+Eureka	            8761
+Product Service	   8082
+Order Service	      8083
+
+# Features Implemented
+
+   Microservices architecture
+   API Gateway routing
+   Eureka service discovery
+   Feign client communication
+   Order with multiple products
+   Separate database per service
+   Docker containerization
+   Load-balanced routing via gateway
 
 # ⚙️ Requirements
 
 Install:
 
-Java 21
+Java 17
 Maven 3.9+
 Git
 IntelliJ Community Edition
@@ -188,23 +266,8 @@ pom.xml
 
 Ensure IntelliJ:
 
-Project SDK = 21
-Module SDK = 21
-
----
-
-# Disable Eureka (important)
-
-If you see:
-
-Connection refused localhost:8761
-
-Add to api-gateway application.yml:
-
-spring:
-cloud:
-discovery:
-enabled: false
+Project SDK = 17
+Module SDK = 17
 
 ---
 
@@ -215,28 +278,6 @@ Initialize repo
 git init
 git add .
 git commit -m "Initial microservices setup"
-
----
-
-# GitHub Push (Token Authentication)
-
-GitHub does not support password authentication.
-
-Create token:
-
-https://github.com/settings/tokens
-
-Push code:
-
-git branch -M main
-git remote add origin <repo-url>
-git push -u origin main
-
-Username:
-your-github-username
-
-Password:
-paste-personal-access-token
 
 ---
 
@@ -277,14 +318,13 @@ http://localhost:8082/actuator/health
 
 # Next Steps
 
-Add database per service
-Add service-to-service communication
-Add DTO layer
-Add exception handling
-Dockerize services
-Add docker-compose
-Add Kubernetes deployment
-Deploy to AWS
+Future Enhancements
+   Circuit Breaker (Resilience4j)
+   Config Server
+   Distributed tracing
+   Kubernetes deployment
+   Authentication (JWT)
+   Centralized logging
 
 ---
 
@@ -300,3 +340,9 @@ Docker & Kubernetes readiness
 Interview preparation project
 
 ---
+
+# Author
+
+Anupama Singh
+Senior Java Developer
+Spring Boot | Microservices | SAP Commerce | AWS
