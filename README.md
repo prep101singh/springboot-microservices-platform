@@ -1,29 +1,49 @@
-# springboot-microservices-platform
+# 🚀 Spring Boot Microservices Platform
 
-Cloud-native microservices platform built using **Spring Boot,Spring Cloud,Eureka, API Gateway, Feign Client, H2, Docker, Kubernetes, and AWS**.
-This project is created for **hands-on learning** covering end-to-end microservices communication with service discovery and containerization.
+Cloud-native microservices platform built using **Spring Boot, Spring Cloud, Eureka, API Gateway, OpenFeign, Docker, Kubernetes, and AWS**.
+This project demonstrates **end-to-end microservices communication**, service discovery, and containerization.
 
 ---
 
-# 🏗️ Architecture
+# 🏗️ Architecture Diagram
 
-                ┌─────────────┐
-                │  API Gateway│
-                └──────┬──────┘
-                       │
-                ┌──────▼──────┐
-                │   Eureka    │
-                │ Discovery   │
-                └──────┬──────┘
-                       │
-        ┌──────────────┴──────────────┐
-        │                             │
-┌───────▼────────┐           ┌────────▼────────┐
-│ product-service │           │  order-service  │
-└────────────────┘           └─────────────────┘
+```mermaid
+graph TD
+
+Client --> API-Gateway
+
+API-Gateway --> User-Service
+API-Gateway --> Product-Service
+API-Gateway --> Order-Service
+API-Gateway --> Payment-Service
+API-Gateway --> Notification-Service
+
+User-Service --> Eureka
+Product-Service --> Eureka
+Order-Service --> Eureka
+Payment-Service --> Eureka
+Notification-Service --> Eureka
+```
+
+---
+
+# 📦 Services Overview
+
+| Service              | Port | Description             |
+| -------------------- | ---- | ----------------------- |
+| discovery-server     | 8761 | Eureka service registry |
+| api-gateway          | 8080 | API Gateway routing     |
+| user-service         | 8081 | User management         |
+| product-service      | 8082 | Product catalog         |
+| order-service        | 8083 | Order processing        |
+| payment-service      | 8084 | Payment handling        |
+| notification-service | 8085 | Notifications           |
+
+---
 
 # 📁 Project Structure
 
+```
 springboot-microservices-platform
 ├── api-gateway
 ├── user-service
@@ -34,61 +54,74 @@ springboot-microservices-platform
 ├── kubernetes
 ├── docs
 └── README.md
+```
 
 ---
 
-# Tech Stack
-   Java 17
-   Spring Boot
-   Spring Cloud Gateway
-   Eureka Service Discovery
-   OpenFeign
-   Spring Data JPA
-   H2 Database
-   Docker
-   Maven
+# 🛠️ Tech Stack
 
-# Services:
-
-1. discovery-server
-   Eureka server
-   Port: 8761
-   Service registry
-2. api-gateway
-   Routes requests to services
-   Port: 8080
-3. product-service
-   Product catalog management
-   Port: 8082
-4. order-service
-   Order creation
-   Calls product-service via Feign
-   Port: 8083
-5. user-service
-6. payment-service
-7. notification-service
+* Java 17
+* Spring Boot
+* Spring Cloud Gateway
+* Eureka Service Discovery
+* OpenFeign
+* Spring Data JPA
+* H2 Database
+* Docker
+* Kubernetes
+* AWS
+* Maven
 
 ---
 
-# API Endpoints
+# ✨ Features
 
-Create Product
+✅ Microservices architecture
+✅ API Gateway routing
+✅ Eureka service discovery
+✅ Feign client communication
+✅ Order with multiple products
+✅ Separate database per service
+✅ Docker containerization
+✅ Load-balanced routing via gateway
+✅ Cloud-native design
 
+---
+
+# 🔗 API Endpoints
+
+## Create Product
+
+```
 POST /products
+```
 
+```json
 {
   "name": "iPhone",
   "description": "Apple phone",
   "price": 80000,
   "stock": 10
 }
-Get Products
+```
 
+---
+
+## Get Products
+
+```
 GET /products
+```
 
-Create Order
+---
 
+## Create Order
+
+```
 POST /orders
+```
+
+```json
 {
   "userId": 1,
   "items": [
@@ -98,251 +131,156 @@ POST /orders
     }
   ]
 }
-
-
-# 🚀 Services & Ports
-
-API Gateway → 8080
-User Service → 8081
-Product Service → 8082
-Order Service → 8083
-Payment Service → 8084
-Notification Service → 8085
+```
 
 ---
 
-# Run Using Docker
+# 🚀 Services & Ports
 
-Build jars: mvn clean package
+| Service              | URL                                            |
+| -------------------- | ---------------------------------------------- |
+| API Gateway          | [http://localhost:8080](http://localhost:8080) |
+| User Service         | [http://localhost:8081](http://localhost:8081) |
+| Product Service      | [http://localhost:8082](http://localhost:8082) |
+| Order Service        | [http://localhost:8083](http://localhost:8083) |
+| Payment Service      | [http://localhost:8084](http://localhost:8084) |
+| Notification Service | [http://localhost:8085](http://localhost:8085) |
+| Eureka Server        | [http://localhost:8761](http://localhost:8761) |
 
-Run containers: docker-compose up
+---
 
-Services:
+# 🐳 Run Using Docker
 
-Service	            Port
-API Gateway	         8080
-Eureka	            8761
-Product Service	   8082
-Order Service	      8083
+Build jars
 
-# Features Implemented
+```bash
+mvn clean package
+```
 
-   Microservices architecture
-   API Gateway routing
-   Eureka service discovery
-   Feign client communication
-   Order with multiple products
-   Separate database per service
-   Docker containerization
-   Load-balanced routing via gateway
+Run containers
+
+```bash
+docker-compose up --build
+```
+
+---
 
 # ⚙️ Requirements
 
 Install:
 
-Java 17
-Maven 3.9+
-Git
-IntelliJ Community Edition
+* Java 17
+* Maven 3.9+
+* Git
+* IntelliJ IDEA
 
 Verify:
 
+```bash
 java -version
 mvn -version
 git --version
+```
 
 ---
 
-# ▶️ How to Run Services
+# ▶️ How to Run Services (Local)
 
 Start services in order:
 
-1. product-service
-   Run: ProductServiceApplication
-
-2. user-service
-   Run: UserServiceApplication
-
-3. order-service
-   Run: OrderServiceApplication
-
-4. api-gateway
-   Run: ApiGatewayApplication
+1. discovery-server
+2. product-service
+3. user-service
+4. order-service
+5. payment-service
+6. notification-service
+7. api-gateway
 
 ---
 
 # 🌐 Access via API Gateway
 
+```
 http://localhost:8080/users
 http://localhost:8080/products
 http://localhost:8080/orders
-
----
-
-# application.yml Example
-
-server:
-port: 8081
-
-spring:
-application:
-name: user-service
-
----
-
-# API Gateway Configuration
-
-server:
-port: 8080
-
-spring:
-application:
-name: api-gateway
-
-cloud:
-gateway:
-routes:
-- id: user-service
-uri: http://localhost:8081
-predicates:
-- Path=/users/**
-
-```
-    - id: product-service
-      uri: http://localhost:8082
-      predicates:
-        - Path=/products/**
-
-    - id: order-service
-      uri: http://localhost:8083
-      predicates:
-        - Path=/orders/**
+http://localhost:8080/payments
+http://localhost:8080/notifications
 ```
 
 ---
 
-# IntelliJ Setup
+# ⚡ API Gateway Configuration
 
-Open IntelliJ
-Click Open
-Select root folder:
+```yaml
+server:
+  port: 8080
 
-springboot-microservices-platform
+spring:
+  application:
+    name: api-gateway
 
-Click Trust Project
+  cloud:
+    gateway:
+      routes:
 
-Reload Maven project
+        - id: user-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/users/**
 
-Set SDK = Java 21
+        - id: product-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/products/**
 
-Run Application classes
-
----
-
-# Maven Issues Fix
-
-If Maven not detected:
-
-Right click pom.xml
-Reload Maven project
-
-If settings.xml error:
-
-Remove file:
-
-~/.m2/settings.xml
-
-Reload project again
+        - id: order-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/orders/**
+```
 
 ---
 
-# Java Version Error Fix
+# ❤️ Health Check
 
-pom.xml
-
-<properties>
-  <java.version>21</java.version>
-</properties>
-
-Ensure IntelliJ:
-
-Project SDK = 17
-Module SDK = 17
-
----
-
-# Git Setup
-
-Initialize repo
-
-git init
-git add .
-git commit -m "Initial microservices setup"
-
----
-
-# .gitignore
-
-target/
-.idea/
-*.log
-.DS_Store
-.env
-out/
-
----
-
-# Commit These Files
-
-pom.xml
-src/
-application.yml
-mvnw
-mvnw.cmd
-.mvn/
-
-Do NOT commit:
-
-target/
-.idea/
-logs
-
----
-
-# Health Check
-
+```
 http://localhost:8081/actuator/health
 http://localhost:8082/actuator/health
+http://localhost:8083/actuator/health
+```
 
 ---
 
-# Next Steps
+# 🔮 Future Enhancements
 
-Future Enhancements
-   Circuit Breaker (Resilience4j)
-   Config Server
-   Distributed tracing
-   Kubernetes deployment
-   Authentication (JWT)
-   Centralized logging
+* Circuit Breaker (Resilience4j)
+* Config Server
+* Distributed tracing
+* Kubernetes deployment
+* Authentication (JWT)
+* Centralized logging
+* Kafka event-driven communication
 
 ---
 
-# Goal
+# 🎯 Project Goal
 
 This project demonstrates:
 
-Microservices architecture
-API Gateway routing
-Service isolation
-Cloud-native design
-Docker & Kubernetes readiness
-Interview preparation project
+* Microservices architecture
+* API Gateway routing
+* Service discovery
+* Cloud-native design
+* Docker containerization
+* Kubernetes readiness
+* Interview-ready architecture
 
 ---
 
-# Author
+# 👩‍💻 Author
 
-Anupama Singh
+**Anupama Singh**
 Senior Java Developer
+
 Spring Boot | Microservices | SAP Commerce | AWS
